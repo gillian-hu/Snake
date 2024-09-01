@@ -1,0 +1,92 @@
+package snake;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+
+import snake.board;
+import utilities.GDV5;
+import snake.GameRunner;
+
+public class GameRunner extends GDV5 {
+	
+	public static int gamePage = 3;
+	private pages pages = new pages();
+	private rat rat = new rat();
+	private eyes eye = new eyes();
+	
+	public GameRunner() {
+		board.createBoard();
+		snake.createSnake();
+	}
+	
+	public static void main(String[] args) {
+		GameRunner g = new GameRunner();
+		g.start();
+		snake.playsound();
+	}
+	
+	@Override
+	public void update() {
+		if (gamePage == 1 || gamePage == 3)
+			snake.move();
+		rat.updateRat(snake.snakeArr);
+		if (GDV5.KeysPressed[KeyEvent.VK_ENTER])
+			GameRunner.gamePage = 1;
+		if (gamePage == 3)
+			rat.moveRat();
+	}
+
+	@Override
+	public void draw(Graphics2D win) {
+		if (gamePage == 0) {
+			pages.drawSplash(win);
+			
+		}
+		if (gamePage == 1) {
+			for (int i = 0; i < 625; i++) {
+				if (i % 2 == 0) {
+					win.setColor(Color.LIGHT_GRAY);
+				}
+				else {
+					win.setColor(Color.GRAY);
+				}
+				board.boardArr[i].draw(win);
+			}
+			for (int i = 0; i < snake.snakeArr.size(); i++) {
+				win.setColor(Color.CYAN);
+				snake.snakeArr.get(i).draw(win);
+			}
+			eye.drawEye(win);
+			rat.drawRat(win);
+			pages.drawScore(win);
+			pages.changeLevel();
+		}
+		if (gamePage == 2) {
+			pages.level2Directions(win);
+		}
+		if (gamePage == 3) {
+			for (int i = 0; i < 625; i++) {
+				if (i % 2 == 0) {
+					win.setColor(Color.LIGHT_GRAY);
+				}
+				else {
+					win.setColor(Color.GRAY);
+				}
+				board.boardArr[i].draw(win);
+			}
+			for (int i = 0; i < snake.snakeArr.size(); i++) {
+				win.setColor(Color.CYAN);
+				snake.snakeArr.get(i).draw(win);
+			}
+			eye.drawEye(win);
+			rat.drawRat(win);
+			pages.drawScore(win);
+		}
+		if (gamePage == 4) {
+			pages.showEnd(win);
+		}
+		
+	}
+	
+}
