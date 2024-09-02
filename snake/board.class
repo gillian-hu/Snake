@@ -1,0 +1,26 @@
+package snake;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+
+import utilities.GDV5;
+
+public class board extends Rectangle {
+
+	private static int boardDimensions = GDV5.getMaxWindowX()/25;
+	static box[] boardArr = new box[625];
+	
+	public static void createBoard() {
+		int x = 0, y = 0;
+		for (int i = 0; i < 625; i++) {
+			boardArr[i] = new box(x, y, boardDimensions, boardDimensions, Color.GRAY);
+			x += boardDimensions;
+			if ((i+1) % 25 == 0) {
+				y += boardDimensions;
+				x = 1;
+			}
+		}
+	}
+
+}
