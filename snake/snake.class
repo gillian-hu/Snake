@@ -1,0 +1,107 @@
+package snake;
+
+import java.awt.Color;
+import java.io.File;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
+import utilities.GDV5;
+
+public class snake {
+	
+	static ArrayList<box> snakeArr = new ArrayList<box>();
+	static boolean snakeUp = false;
+	static boolean snakeDown = false;
+	static boolean snakeRight = false;
+	static boolean snakeLeft = false;
+	public static int counter = 0;
+	
+	public static void createSnake() {
+		int a = 300;
+		int b = 300;
+		for (int i = 0; i < 3; i++) {
+			snakeArr.add(i, new box(a,b,30,30, Color.CYAN));
+			a -= 30;
+		}
+	}
+	
+	public static void playsound() {
+		File snakeFile = new File("relaxing.wav");
+		GDV5.PlaySound(snakeFile);
+	}
+	
+	public static void move() {
+		if (GDV5.KeysPressed[KeyEvent.VK_RIGHT]) {
+			snakeRight = true;
+			snakeLeft = false;
+			snakeUp = false;
+			snakeDown = false;
+		}
+		if (GDV5.KeysPressed[KeyEvent.VK_LEFT]) {
+			snakeLeft = true;
+			snakeRight = false;
+			snakeUp = false;
+			snakeDown = false;
+		}
+		if (GDV5.KeysPressed[KeyEvent.VK_UP]) {
+			snakeUp = true;
+			snakeDown = false;
+			snakeLeft = false;
+			snakeRight = false;
+		}
+		if (GDV5.KeysPressed[KeyEvent.VK_DOWN]) {
+			snakeDown = true;
+			snakeUp = false;
+			snakeLeft = false;
+			snakeRight = false;
+		}
+		if (snakeRight == true || snakeLeft == true || snakeUp == true || snakeDown == true) {
+			for (int i = snakeArr.size() - 1; i > 0; i--) {
+				snakeArr.get(i).x = snakeArr.get(i-1).x;
+				snakeArr.get(i).y = snakeArr.get(i-1).y;
+			}
+		}
+		if (snakeRight == true) {
+			snakeArr.get(0).x += 30;
+		}
+		if (snakeLeft) {
+			snakeArr.get(0).x -= 30;
+		}
+		if (snakeUp == true) {
+			snakeArr.get(0).y -= 30;
+		}
+		if (snakeDown == true) {
+			snakeArr.get(0).y += 30;
+		}
+		if ((snakeRight == true || snakeLeft == true || snakeUp == true || snakeDown == true) && GameRunner.gamePage == 3) {
+			counter++;
+		}
+		
+		if (snakeArr.get(0).x < 0 || snakeArr.get(0).y < 0 || snakeArr.get(0).x >= 750 || snakeArr.get(0).y >= 750) {
+			GameRunner.gamePage = 4;
+		}
+		
+		for (int i = 1; i < snake.snakeArr.size(); i++) {
+			if (snakeArr.get(0).x == snakeArr.get(i).x && snakeArr.get(0).y == snakeArr.get(i).y) {
+				GameRunner.gamePage = 4;
+			}
+		}
+ 	}
+
+	public static void resetSnake() {
+		for (int i = snakeArr.size() - 1; i >= 0; i--) {
+			snakeArr.remove(i);
+		}
+		int c = 300;
+		int d = 300;
+		for (int i = 0; i < 4; i++) {
+			snakeArr.add(i, new box(c,d,30,30, Color.CYAN));
+			c -= 30;
+		}
+		snakeDown = false;
+		snakeUp = false;
+		snakeLeft = false;
+		snakeRight = false;
+	}
+	
+}
