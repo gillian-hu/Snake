@@ -1,0 +1,107 @@
+package snake;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
+import utilities.GDV5;
+
+public class pages {
+		
+	private String snakeS = "S";
+	private String snakeN = "N";
+	private String snakeA = "A";
+	private String snakeK = "K";
+	private String snakeE = "E";
+	private String snakeEnd = "!";
+	
+	private String directions1 = "Press Enter to start";
+	private String directions2 = "Use the Up, Down, Right, and Left keys to control the snake";
+	private String directions3 = "Your snake is hungry for rats!!";
+	private String name = "By: Gillian Hu (Period 0)";
+	
+	private String directions4 = "Welcome to Level 2!";
+	private String directions5 = "Level 1 was too easy...";
+	private String directions6 = "Instead, the rat is moving!";
+	private String directions7 = "Try and catch the live prey!";
+	private String directions8 = "Press 1 to continue";
+	
+	private String ratsEaten = "Rats Eaten: ";
+	
+	private String win = "You win!";
+	private String lose = "You lost!";
+	private String finalScore = "Score: ";
+	private String drawTop = "Top Score: ";
+	private String restart = "Press 2 to Restart";
+	
+	public void drawSplash(Graphics2D pw) {
+		pw.setFont(new Font("Monospaced", Font.BOLD, 50));
+		pw.setColor(Color.green);
+		pw.drawString(String.valueOf(snakeS),275, 200);
+		pw.setColor(Color.magenta);
+		pw.drawString(String.valueOf(snakeN),315, 200);
+		pw.setColor(Color.cyan);
+		pw.drawString(String.valueOf(snakeA),355, 200);
+		pw.setColor(Color.orange);
+		pw.drawString(String.valueOf(snakeK),395, 200);
+		pw.setColor(Color.pink);
+		pw.drawString(String.valueOf(snakeE),435, 200);
+		pw.setColor(Color.blue);
+		pw.drawString(String.valueOf(snakeEnd),465, 200);
+
+		pw.setColor(Color.LIGHT_GRAY);
+		pw.setFont(new Font("Monospaced", Font.PLAIN, 16));
+		pw.drawString(String.valueOf(directions1),285, 300);
+		pw.drawString(String.valueOf(directions2),100, 340);
+		pw.drawString(String.valueOf(directions3),230, 380);
+		pw.setColor(Color.WHITE);
+		pw.drawString(String.valueOf(name),260, 460);
+	}
+		
+	public void showEnd(Graphics2D pr) {
+		pr.setColor(Color.white);
+		pr.setFont(new Font("Monospaced Bold", Font.PLAIN, 30));
+		pr.drawString(String.valueOf(lose),320, 250);
+		pr.drawString(String.valueOf(finalScore),320,350);
+		pr.drawString(String.valueOf(rat.score),420,350);
+		pr.drawString(String.valueOf(drawTop),285,450);
+		pr.drawString(String.valueOf(rat.topScore),455,450);
+		pr.drawString(String.valueOf(restart),255, 550);
+		if (GDV5.KeysPressed[KeyEvent.VK_2]) {
+			GameRunner.gamePage = 0;
+			snake.resetSnake();
+			rat.score = 0;
+		}
+	}
+		
+	public void level2Directions(Graphics2D pw) {
+		pw.setColor(Color.white);
+		pw.setFont(new Font("Monospaced Bold", Font.PLAIN, 30));
+		pw.drawString(String.valueOf(directions4),240,180);
+		pw.drawString(String.valueOf(directions5),230,280);
+		pw.drawString(String.valueOf(directions6),200,380);
+		pw.drawString(String.valueOf(directions7),195,480);
+		pw.drawString(String.valueOf(directions8),250,580);
+		if (GDV5.KeysPressed[KeyEvent.VK_1]) {
+			GameRunner.gamePage = 3;
+			snake.resetSnake();
+		}
+	}
+	
+	public void drawScore(Graphics2D pc) {
+		pc.setColor(Color.white);
+		pc.setFont(new Font("Monospaced Bold", Font.BOLD, 30));
+		pc.drawString(ratsEaten, 20, 40);
+		pc.drawString(String.valueOf(rat.score),210,40);
+	}
+	
+	public void changeLevel() {
+		if (rat.score == 10) {
+			GameRunner.gamePage = 2;
+		}
+	}
+	
+}
+
