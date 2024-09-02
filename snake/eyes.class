@@ -1,0 +1,30 @@
+package snake;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+
+public class eyes {
+
+	private static int eye = 0x25C9;
+	private static String finalEye = new String(Character.toChars(eye));
+	private static int x = 0;
+	private static int y = 0;
+	private static int a = 0;
+	private static int b = 0;
+	static box tongue = new box(x,y,a,b,Color.PINK);
+	
+	public static void drawEye(Graphics2D pb) {
+		pb.setColor(Color.BLACK);
+		pb.setFont(new Font("Monospaced",Font.PLAIN, 22));
+		if (snake.snakeUp == true || snake.snakeDown == true) {
+			pb.drawString(finalEye,snake.snakeArr.get(0).x, snake.snakeArr.get(0).y + 15);
+			pb.drawString(finalEye,snake.snakeArr.get(0).x+18, snake.snakeArr.get(0).y + 15);
+		}
+		if (snake.snakeLeft == true || snake.snakeRight == true) {
+			pb.drawString(finalEye,snake.snakeArr.get(0).x + 15, snake.snakeArr.get(0).y + 10);
+			pb.drawString(finalEye,snake.snakeArr.get(0).x + 15, snake.snakeArr.get(0).y + 30);
+		}
+	}
+	
+}
